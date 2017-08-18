@@ -1,15 +1,99 @@
+from argparse import _AppendAction
+
 import pygame as pg
 import random as r
 
 class Func:
+    polynoms = {}
+
     def __init__(self, func_string):
-        print("hej!")
+        polynom_strings = []
+        char_index = 0
+        polynom_string = ""
+
+        while True:
+            if char_index == len(func_string):
+                polynom_strings.append(polynom_string)
+                polynom_string = ""
+                break
+
+            char = func_string[char_index]
+            if polynom_string == "" or char != "+" and char != "-":
+                polynom_string += char
+                char_index += 1
+            else:
+                polynom_strings.append(polynom_string)
+                polynom_string = ""
+                continue
+
+
+        print(polynom_strings)
+        print("############")
+
+        for polynom in polynom_strings:
+            j = 0
+            multiplier = 1
+
+            if polynom[j] == "+" or polynom[j] == "-":
+                j += 1
+
+            if polynom[j].isdigit():
+                multiplier = self.get_number_at(polynom, j)
+                while j < len(polynom):
+                    if not polynom[j].isdigit():
+                        break
+                    j += 1
+                j += 1
+
+            if j >= len(polynom):
+                if 0 in self.polynoms.keys():
+                    self.polynoms[0] += multiplier
+                else:
+                    self.polynoms[0] = multiplier
+                continue
+
+            if polynom[j] == "*":
+                j += 1
+
+            print(polynom + ", " + str(multiplier) + ", " + str(j))
+
+            # Polynom
+            j += 2
+            power = self.get_number_at(polynom, j)
+
+            if power in self.polynoms.keys():
+                self.polynoms[power] += multiplier
+            else:
+                self.polynoms[power] = multiplier
+
+        print(self.polynoms)
+
+    def get_number_at(self, s, i):
+        numb_str = "0"
+        counter = 0
+        while s[i + counter].isdigit():
+            numb_str += s[i + counter]
+            counter += 1
+            if i + counter >= len(s):
+                break
+
+        numb = int(numb_str)
+        if s[0] == "-":
+            numb *= -1
+
+        return numb
 
     def calc(self, x):
-        return x * 2
-
+        output = 0
+        for power, constant in self.polynoms.iteritems():
+            print(str(power) + " " + str(constant))
+            output += constant * pow(x, power)
+        return output
 
 #user_func = raw_input("Function: ");
+
+func = Func("2*x^2-1*x^3")
+print(func.calc(2))
 
 background_colour = (255,255,255)
 plot_color = (255, 0, 0)
@@ -59,7 +143,7 @@ def draw_line((x1,y1),(x2,y2)):
 
 #NOT DONE
 for i in range(0, resolution):
-    points.append((to_units(1.0 * i * (width / resolution)), r.randint(0.0, 10.0)))
+    points.append((to_units(i * (width / resolution)), r.randint(0.0, 10.0)))
 
 pg.display.flip()
 
