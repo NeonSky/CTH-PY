@@ -59,7 +59,7 @@ def draw_line((x1,y1),(x2,y2)):
 
 #NOT DONE
 for i in range(0, resolution):
-    points.append((to_units(1.0 * i * (width / resolution)), r.randint(0.0, 10.0)))
+    points.append((to_units(1.0 * i * (1.0 * width / 1.0 * resolution)), r.randint(0.0, 10.0)))
 
 pg.display.flip()
 
