@@ -97,7 +97,7 @@ class Func:
 #func = Func("2*x^2-1*x^3")
 #func = Func("-2*x^2+1*x^3")
 #func = Func("x^0.5-1.5")
-#func = Func("x^0.5+1.5")
+func = Func("x^0.5+1.5")
 #func = Func("x^1")
 #func = Func("2*x^1-2+4")
 #for i in range(0, 10):
