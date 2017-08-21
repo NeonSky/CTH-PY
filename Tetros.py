@@ -1,5 +1,11 @@
 import pygame as pg
 
+#Block -> 1x1
+#Shape -> Has 4 blocks
+#BlockMap -> Has instance of every placed block
+#GameManager -> Controls score and general game logic like spawning shapes and removing them
+#Tetros -> Screen management
+
 background_colour = (0, 0, 0)
 (width, height) = (640, 480)
 
