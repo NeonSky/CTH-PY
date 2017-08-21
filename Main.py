@@ -27,10 +27,11 @@ class Func:
                 continue
 
 
-        print(polynom_strings)
-        print("############")
+        #print(polynom_strings)
+        #print("############")
 
         for polynom in polynom_strings:
+            #print(polynom)
             j = 0
             multiplier = 1
 
@@ -40,10 +41,9 @@ class Func:
             if polynom[j].isdigit():
                 multiplier = self.get_number_at(polynom, j)
                 while j < len(polynom):
-                    if not polynom[j].isdigit():
+                    if not polynom[j].isdigit() and polynom[j] != ".":
                         break
                     j += 1
-                j += 1
 
             if j >= len(polynom):
                 if 0 in self.polynoms.keys():
@@ -55,49 +55,57 @@ class Func:
             if polynom[j] == "*":
                 j += 1
 
-            print(polynom + ", " + str(multiplier) + ", " + str(j))
+            #print(polynom + ", " + str(multiplier) + ", " + str(j))
 
             # Polynom
             j += 2
             power = self.get_number_at(polynom, j)
+            #print(power)
 
             if power in self.polynoms.keys():
                 self.polynoms[power] += multiplier
             else:
                 self.polynoms[power] = multiplier
 
-        print(self.polynoms)
+        #print(self.polynoms)
 
     def get_number_at(self, s, i):
         numb_str = "0"
         counter = 0
-        while s[i + counter].isdigit():
+        while s[i + counter].isdigit() or s[i + counter] == ".":
             numb_str += s[i + counter]
             counter += 1
             if i + counter >= len(s):
                 break
 
-        numb = int(numb_str)
-        if s[0] == "-":
-            numb *= -1
+        numb = float(numb_str)
+        if i-1 >= 0:
+            if s[i-1] == "-":
+                numb *= -1
 
         return numb
 
     def calc(self, x):
         output = 0
         for power, constant in self.polynoms.iteritems():
-            print(str(power) + " " + str(constant))
+            #print(str(power) + " " + str(constant))
             output += constant * pow(x, power)
         return output
 
 #user_func = raw_input("Function: ");
 
-func = Func("2*x^2-1*x^3")
-print(func.calc(2))
+#func = Func("2*x^2-1*x^3")
+#func = Func("-2*x^2+1*x^3")
+#func = Func("x^0.5-1.5")
+#func = Func("x^0.5+1.5")
+#func = Func("x^1")
+#func = Func("2*x^1-2+4")
+#for i in range(0, 10):
+#    print(func.calc(i))
 
 background_colour = (255,255,255)
 plot_color = (255, 0, 0)
-plot_width = 4.0
+plot_width = 1
 (width, height) = (640, 480)
 
 screen = pg.display.set_mode((width, height))
@@ -125,7 +133,6 @@ def to_pixel_list(points):
 def to_units((x,y)):
     return (x/ppu_x,y/ppu_y)
 
-
 def rev((x,y)):
    return (x,height-y)
 
@@ -136,14 +143,19 @@ def rev_list(points):
     return converted_points
 
 def draw_lines(points):
-    pg.draw.lines(screen, plot_color, False, rev_list(to_pixel_list(points)), plot_width)
+    screen_points = rev_list(to_pixel_list(points))
+    pg.draw.lines(screen, plot_color, False, screen_points, plot_width)
 
 def draw_line((x1,y1),(x2,y2)):
-    pg.draw.line(screen, plot_color, rev(to_pixles((x1,y1))), rev(to_pixles((x2,y2))), plot_width)
+    p1 = rev(to_pixles((x1,y1)))
+    p2 = rev(to_pixles((x2,y2)))
+    pg.draw.line(screen, plot_color, p1, p2, plot_width)
 
-#NOT DONE
 for i in range(0, resolution):
-    points.append((to_units(1.0 * i * (1.0 * width / 1.0 * resolution)), r.randint(0.0, 10.0)))
+    print(func.calc(i))
+    points.append((i, func.calc(i)))
+
+draw_lines(points)
 
 pg.display.flip()
 
