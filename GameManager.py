@@ -3,7 +3,7 @@ from Shape import Shape
 
 class GameManager:
     blockMap = BlockMap()
-    currentShape = Shape((0, 0), 'I')
+    currentShape = Shape((0, 0), 'O')
 
     def __init__(self):
         print("Game starting...")
