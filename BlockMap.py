@@ -10,5 +10,6 @@ class BlockMap:
     def collides(self, shape, x_change, y_change):
         return True
 
+
     def draw(self):
         print("Draw BlockMap")

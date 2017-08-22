@@ -21,6 +21,7 @@ screen.fill(background_color)
 
 running = True
 while running:
+  gameManager.update()
   gameManager.draw(screen)
   pg.display.flip()
 

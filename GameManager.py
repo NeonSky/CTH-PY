@@ -8,6 +8,9 @@ class GameManager:
     def __init__(self):
         print("Game starting...")
 
+    def update(self):
+        self.currentShape.fall()
+
     def draw(self, screen):
         #self.blockMap.draw(screen)
         self.currentShape.draw(screen)
