@@ -54,6 +54,10 @@ class Shape:
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_z))
             self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1] + Block.width), self.color_z))
 
+    def fall(self):
+        self.pos = (self.pos[0], self.pos[1] + Block.width)
+        for block in self.blocks:
+            block.pos = (block.pos[0], block.pos[1] + Block.width)
 
 
     def draw(self, screen):
