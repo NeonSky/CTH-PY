@@ -2,7 +2,8 @@ from Block import Block
 
 class Shape:
     pos = (0, 0)
-    type = 'I' #I, O, T, S, Z, J, L
+    types = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
+    type = types[0]
     color_i = (0, 255, 255)
     color_j = (0, 0, 255)
     color_l = (255, 165, 0)
