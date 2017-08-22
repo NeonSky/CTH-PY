@@ -39,20 +39,20 @@ class Shape:
             self.blocks.append(Block((self.pos[0], self.pos[1] + Block.width), self.color_o))
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_o))
         elif self.type == 'S':
-            self.blocks.append(Block(self.pos + Block.width*3, self.color_o))
-            self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1]), self.color_o))
-            self.blocks.append(Block((self.pos[0], self.pos[1] + Block.width), self.color_o))
-            self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_o))
+            self.blocks.append(Block((self.pos[0] + Block.width*2, self.pos[1]), self.color_s))
+            self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1]), self.color_s))
+            self.blocks.append(Block((self.pos[0], self.pos[1] + Block.width), self.color_s))
+            self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_s))
         elif self.type == 'T':
             self.blocks.append(Block(self.pos, self.color_t))
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1]), self.color_t))
             self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1]), self.color_t))
-            self.blocks.append(Block((self.pos[0], self.pos[1] + Block.width), self.color_t))
+            self.blocks.append(Block((self.pos[0] + Block.width , self.pos[1] + Block.width), self.color_t))
         elif self.type == 'Z':
             self.blocks.append(Block(self.pos, self.color_z))
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1]), self.color_z))
-            self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1]), self.color_z))
-            self.blocks.append(Block((self.pos[0], self.pos[1] + Block.width), self.color_z))
+            self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_z))
+            self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1] + Block.width), self.color_z))
 
 
 
