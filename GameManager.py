@@ -1,5 +1,6 @@
 from BlockMap import BlockMap
 from Shape import Shape
+from Block import Block
 
 class GameManager:
     blockMap = BlockMap()
@@ -12,8 +13,9 @@ class GameManager:
     fallTimer = 0
     def update(self):
         if self.fallTimer >= self.fallTime:
-            self.currentShape.fall()
-            self.fallTimer = 0
+            if not self.blockMap.collides(self.currentShape,0,Block.width):
+                self.currentShape.fall()
+                self.fallTimer = 0 
             return
         self.fallTimer += 1
 
