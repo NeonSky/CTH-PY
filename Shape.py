@@ -55,6 +55,8 @@ class Shape:
             self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1] + Block.width), self.color_z))
 
 
+    def create_block(self, x_offset, y_offset, color):
+        return Block((self.pos[0] + Block.width * x_offset, self.pos[1] + Block.width * y_offset), color)
 
     def draw(self, screen):
         for block in self.blocks:
