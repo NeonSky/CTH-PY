@@ -9,5 +9,5 @@ class GameManager:
         print("Game starting...")
 
     def draw(self, screen):
-        #self.blockMap.draw(screen)
+        self.blockMap.draw(screen)
         self.currentShape.draw(screen)
