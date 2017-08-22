@@ -2,7 +2,8 @@ from Block import Block
 
 class Shape:
     pos = (0, 0)
-    type = 'I' #I, O, T, S, Z, J, L
+    types = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
+    type = types[0]
     color_i = (0, 255, 255)
     color_j = (0, 0, 255)
     color_l = (255, 165, 0)
@@ -54,6 +55,10 @@ class Shape:
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_z))
             self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1] + Block.width), self.color_z))
 
+    def fall(self):
+        self.pos = (self.pos[0], self.pos[1] + Block.width)
+        for block in self.blocks:
+            block.pos = (block.pos[0], block.pos[1] + Block.width)
 
     def create_block(self, x_offset, y_offset, color):
         return Block((self.pos[0] + Block.width * x_offset, self.pos[1] + Block.width * y_offset), color)
