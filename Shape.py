@@ -85,6 +85,8 @@ class Shape:
         for block in self.blocks:
             block.pos = (block.pos[0], block.pos[1] + Block.width)
 
+    def create_block(self, x_offset, y_offset, color):
+        return Block((self.pos[0] + Block.width * x_offset, self.pos[1] + Block.width * y_offset), color)
 
     def draw(self, screen):
         for block in self.blocks:
