@@ -22,6 +22,11 @@ class BlockMap:
 
         self.blocks[10][0].applyBlock(Block((0, 0), (255, 0, 100)))
 
+    def applyShape(self, shape):
+        for block in shape:
+            self.blocks[block.pos[1]/Block.width][block.pos[0]].applyBlock(block)
+
+
     def collides(self, shape, x_change, y_change):
         for block in shape.blocks:
             if(self.blocks[(y_change+block.pos[1])/Block.width][(x_change+block.pos[0])/Block.width].active()):
