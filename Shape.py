@@ -2,7 +2,7 @@ from Block import Block
 
 class Shape:
     pos = (0, 0)
-    types = ['I', 'J', 'L', 'O', 'S', 'T', 'Z']
+    types = ['I', 'J', 'L', 'O', 'S', 'T', 'Z', 'SMURF']
     type = types[0]
     color_i = (0, 255, 255)
     color_j = (0, 0, 255)
@@ -53,6 +53,31 @@ class Shape:
             self.blocks.append(Block(self.pos, self.color_z))
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1]), self.color_z))
             self.blocks.append(Block((self.pos[0] + Block.width, self.pos[1] + Block.width), self.color_z))
+            self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1] + Block.width), self.color_z))
+        elif self.type == 'SMURF':
+            rc = (170, 47, 76) #red color
+            drc = (146, 48, 73) #dard red color
+            bc = (60,144,190) #blue color
+            dbc = (57,125,160) #dark blue color
+            gc = (224,224,224) #grey color
+            dgc = (51,51,51) #dark grey color
+            nc = (0,0,0) #no color (black)
+
+            [
+                [nc,nc,nc,rc,rc,rc,rc,rc],
+                [nc,nc,rc,rc,rc,drc,drc],
+                [nc,rc,rc,rc,drc,rc,rc,rc,rc],
+                [nc,rc,rc,rc,rc,bc,gc,dgc],
+                [nc,rc,bc,bc,gc,bc,gc,dgc,bc,bc],
+                [nc,nc,bc,bc,gc,bc,bc,gc,gc,bc],
+                [nc,nc,nc,dbc,gc,gc,gc,dbc],
+                [nc,bc,bc,bc,dbc,gc,gc,gc,dbc],
+                [bc,bc,nc,bc,bc,bc,gc,gc,gc,gc],
+                [bc,bc,nc,rc,rc,rc,rc,nc,bc,bc],
+                [nc,rc,rc,rc,nc,nc,rc,rc,rc],
+                [nc,rc,rc,rc,nc,nc,rc,rc,rc]
+            ]
+
             self.blocks.append(Block((self.pos[0] + Block.width * 2, self.pos[1] + Block.width), self.color_z))
 
     def fall(self):
