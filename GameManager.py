@@ -1,13 +1,18 @@
+from random import randint
+
 from BlockMap import BlockMap
 from Shape import Shape
 from Block import Block
 
 class GameManager:
     blockMap = BlockMap()
-    currentShape = Shape((0, 0), 'Z')
 
     def __init__(self):
         print("Game starting...")
+        self.spawn_shape()
+
+    def spawn_shape(self):
+        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-1)])
 
     fallTime = 30
     fallTimer = 0
