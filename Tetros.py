@@ -12,13 +12,13 @@ from Shape import Shape
 
 gameManager = GameManager()
 
-background_colour = (0, 0, 0)
+background_color = (0, 0, 0)
 (width, height) = (640, 640)
 
 target_framerate = 60
 screen = pg.display.set_mode((width, height))
 pg.display.set_caption('Tetros')
-screen.fill(background_colour)
+screen.fill(background_color)
 
 clock = pg.time.Clock()
 
