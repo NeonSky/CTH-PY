@@ -1,5 +1,6 @@
 from Block import Block
 
+
 class Shape:
     pos = (0, 0)
     types = ['I', 'J', 'L', 'O', 'S', 'T', 'Z', 'SMURF']
@@ -55,27 +56,27 @@ class Shape:
             self.blocks.append(self.create_block(1, 1, self.color_z))
             self.blocks.append(self.create_block(2, 1, self.color_z))
         elif self.type == 'SMURF':
-            rc = (170, 47, 76) #red color
-            drc = (146, 48, 73) #dard red color
-            bc = (60,144,190) #blue color
-            dbc = (57,125,160) #dark blue color
-            gc = (224,224,224) #grey color
-            dgc = (51,51,51) #dark grey color
-            nc = False #no color (black)
+            rc = (170, 47, 76)  # red color
+            drc = (146, 48, 73)  # dard red color
+            bc = (60, 144, 190)  # blue color
+            dbc = (57, 125, 160)  # dark blue color
+            gc = (224, 224, 224)  # grey color
+            dgc = (51, 51, 51)  # dark grey color
+            nc = False  # no color (black)
 
             blockColors = [
-                [nc,nc,nc,rc,rc,rc,rc,rc],
-                [nc,nc,rc,rc,rc,drc,drc],
-                [nc,rc,rc,rc,drc,rc,rc,rc,rc],
-                [nc,rc,rc,rc,rc,bc,gc,dgc],
-                [nc,rc,bc,bc,gc,bc,gc,dgc,bc,bc],
-                [nc,nc,bc,bc,gc,bc,bc,gc,gc,bc],
-                [nc,nc,nc,dbc,gc,gc,gc,dbc],
-                [nc,bc,bc,bc,dbc,gc,gc,gc,dbc],
-                [bc,bc,nc,bc,bc,bc,gc,gc,gc,gc],
-                [bc,bc,nc,rc,rc,rc,rc,nc,bc,bc],
-                [nc,rc,rc,rc,nc,nc,rc,rc,rc],
-                [nc,rc,rc,rc,nc,nc,rc,rc,rc]
+                [nc, nc, nc, rc, rc, rc, rc, rc],
+                [nc, nc, rc, rc, rc, drc, drc],
+                [nc, rc, rc, rc, drc, rc, rc, rc, rc],
+                [nc, rc, rc, rc, rc, bc, gc, dgc],
+                [nc, rc, bc, bc, gc, bc, gc, dgc, bc, bc],
+                [nc, nc, bc, bc, gc, bc, bc, gc, gc, bc],
+                [nc, nc, nc, dbc, gc, gc, gc, dbc],
+                [nc, bc, bc, bc, dbc, gc, gc, gc, dbc],
+                [bc, bc, nc, bc, bc, bc, gc, gc, gc, gc],
+                [bc, bc, nc, rc, rc, rc, rc, nc, bc, bc],
+                [nc, rc, rc, rc, nc, nc, rc, rc, rc],
+                [nc, rc, rc, rc, nc, nc, rc, rc, rc]
             ]
 
         x = 0
@@ -88,10 +89,33 @@ class Shape:
             x = 0
             y += 1
 
-    def flip(self,direction):
-        maxval = max(map(lambda x: x.pos[direction], self.blocks))
+    def horizontal_flip(self):
+        bounds = self.get_shape_bounds()
+        self.shape_apply((lambda pos: bounds[0][0] + bounds[0][1] - pos[0]), (lambda pos: pos[1]))
+
+    def vertical_flip(self):
+        bounds = self.get_shape_bounds()
+        self.shape_apply((lambda pos: pos[0]), (lambda pos: bounds[1][0] + bounds[1][1] - pos[1]))
+
+    def rotate(self, direction):  # true=clockwise, false=counter-clockwise
+        bounds = self.get_shape_bounds()
+        if direction:  # clockwise
+            self.shape_apply((lambda pos: bounds[0][1] - pos[1]), (lambda pos: bounds[1][0] + pos[0]))
+        else:  # counter-clockwise
+            self.shape_apply((lambda pos: bounds[0][0] + pos[1]), (lambda pos: bounds[1][1] - pos[0]))
+
+    def shape_apply(self, x_func, y_func):
         for block in self.blocks:
-            block.pos = (block.pos[0],maxval-block.pos[direction]) if direction else (maxval-block.pos[direction],block.pos[1])
+            block.pos = (x_func(block.pos), y_func(block.pos))
+
+    def get_shape_bounds(self):
+        block_x_values = map(lambda x: x.pos[0], self.blocks)
+        max_x = max(block_x_values)
+        min_x = min(block_x_values)
+        block_y_values = map(lambda x: x.pos[1], self.blocks)
+        max_y = max(block_y_values)
+        min_y = min(block_y_values)
+        return ((min_x, max_x), (min_y, max_y))
 
     def fall(self):
         self.pos = (self.pos[0], self.pos[1] + Block.width)

@@ -19,7 +19,7 @@ class GameManager:
     fallTimer = 0
     def update(self):
         if self.fallTimer >= self.fallTime:
-            self.smurf_shape.flip(0)
+            self.smurf_shape.vertical_flip()
             #self.smurf_shape.fall()
             self.fallTimer = 0
             #if not self.blockMap.collides(self.currentShape,0,Block.width):
