@@ -61,7 +61,7 @@ class Shape:
             dbc = (57,125,160) #dark blue color
             gc = (224,224,224) #grey color
             dgc = (51,51,51) #dark grey color
-            nc = (0,0,0) #no color (black)
+            nc = False #no color (black)
 
             blockColors = [
                 [nc,nc,nc,rc,rc,rc,rc,rc],
@@ -82,10 +82,16 @@ class Shape:
         y = 0
         for blockColorsRow in blockColors:
             for blockColor in blockColorsRow:
-                self.blocks.append(self.create_block(x, y, blockColor))
+                if blockColor:
+                    self.blocks.append(self.create_block(x, y, blockColor))
                 x += 1
             x = 0
             y += 1
+
+    def flip(self,direction):
+        maxval = max(map(lambda x: x.pos[direction], self.blocks))
+        for block in self.blocks:
+            block.pos = (block.pos[0],maxval-block.pos[direction]) if direction else (maxval-block.pos[direction],block.pos[1])
 
     def fall(self):
         self.pos = (self.pos[0], self.pos[1] + Block.width)
