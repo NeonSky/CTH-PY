@@ -7,6 +7,7 @@ class BlockMap:
 
     def __init__(self):
         self.empty_map()
+        self.row_destroyed = False
 
     def empty_map(self):
         # y, x
@@ -54,6 +55,7 @@ class BlockMap:
                 for block in self.blocks[blockRow]:
                     block.applyBlock(Block(block.pos, self.default_color))
                 self.update_rows(blockRow)
+                self.row_destroyed = True
 
     def update_rows(self, destroyed_row):
         for row in range(0, destroyed_row-1):
