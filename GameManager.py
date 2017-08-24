@@ -12,7 +12,7 @@ class GameManager:
 
     def __init__(self):
         print("Game starting...")
-        self.high_score = HighScore()
+        #self.high_score = HighScore()
         self.blockMap = BlockMap()
         self.smurf_shape = None
         self.spawn_shape()
@@ -77,6 +77,13 @@ class GameManager:
         self.currentShape = None
         self.blockMap.empty_map()
         self.smurf_shape = Shape((0, 0), 'SMURF', self.blockMap)
+
+        keys = pg.key.get_pressed()
+
+        # move sideways
+        if keys[pg.K_SPACE]:
+            self.isGameOver = False
+            self.blockMap.empty_map()
 
     def draw(self, screen):
         self.blockMap.draw(screen)

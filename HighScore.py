@@ -39,7 +39,8 @@ class HighScore:
 
 
     def get_file(self):
-        return open("save.json", 'r+')
+        return ""
+        #return open("save.json", 'r+')
 
     def write_to_file(self):
         save_file = self.get_file()
