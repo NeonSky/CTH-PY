@@ -70,6 +70,11 @@ class BlockMap:
             return True
         return False
 
+    def isGameOver(self):
+        for block in self.blocks[0]:
+            if block.active():
+                return True
+        return False
 
     def draw(self, screen):
         for blockRow in self.blocks:

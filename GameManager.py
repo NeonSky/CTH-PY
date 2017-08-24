@@ -23,6 +23,8 @@ class GameManager:
             self.update_it_smurf()
         else:
             self.update_cur_shape()
+            if self.blockMap.isGameOver():
+                self.show_gameover()
 
     fallTime = 30
     fallTimer = 0
@@ -50,7 +52,6 @@ class GameManager:
             else:
                 self.blockMap.applyShape(self.currentShape)
                 self.spawn_shape()
-                #self.show_gameover()
 
         else:
             self.fallTimer += 1
