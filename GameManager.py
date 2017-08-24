@@ -43,7 +43,8 @@ class GameManager:
     def update_it_smurf(self):
         if self.smurfFlipTimer >= self.smurfFlipTime:
             self.smurfFlipTimer = 0
-            self.smurf_shape.flip(0)
+            self.smurf_shape.vertical_flip()
+            self.smurf_shape.horizontal_flip()
         else:
             self.smurfFlipTimer += 1
 
