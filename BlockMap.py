@@ -11,7 +11,7 @@ class BlockMap:
     def empty_map(self):
         # y, x
         self.blocks = {}
-        default_color = (0, 0, 0)
+        self.default_color = (0, 0, 0)
 
         for i in range(0, 20, 1):
             self.blocks[i] = (Block((0 * Block.width, i * Block.width), default_color),
@@ -31,6 +31,7 @@ class BlockMap:
         for block in shape.blocks:
             if not self.is_outside(block.pos):
                 self.blocks[block.pos[1]/Block.width][block.pos[0]/Block.width].applyBlock(block)
+        self.check_rows()
 
 
     def collides(self, shape, x_change, y_change):
@@ -43,6 +44,17 @@ class BlockMap:
             if(self.blocks[y_coord][x_coord].active()):
                 return True
         return False
+
+    def check_rows(self):
+        for blockRow in self.blocks:
+            isRowFull = True
+            for block in self.blocks[blockRow]:
+                isRowFull = False
+                break
+            if isRowFull:
+                for block in self.blocks[blockRow]:
+                    block = Block(block.pos, self.default_color)
+
 
     def is_outside(self, coord):
         if coord[0] < 0 or coord[0] >= self.width:

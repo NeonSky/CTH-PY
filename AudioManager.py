@@ -6,6 +6,7 @@ bitsize = -16 #uint_16 bit size
 buffer = 2048
 music_filename = "Tetris.mp3"
 game_over_filename = "Game_Over.mp3"
+
 class AudioManager:
     def __init__(self):
 
