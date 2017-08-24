@@ -23,6 +23,10 @@ while running:
   gameManager.draw(screen)
   pg.display.flip()
 
+  if gameManager.isGameOver:
+    audio_manager.play_game_over()
+  elif not audio_manager.music_playing:
+    audio_manager.play_music()
 
 
   #pygame.time.Clock.tick() sets a maximum framerate for the screen to draw
