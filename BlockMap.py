@@ -1,7 +1,9 @@
-from Shape import Shape
 from Block import Block
 
 class BlockMap:
+
+    width = 10
+    height = 20
 
     def __init__(self):
         self.empty_map()
@@ -27,13 +29,26 @@ class BlockMap:
 
     def applyShape(self, shape):
         for block in shape.blocks:
-            self.blocks[block.pos[1]/Block.width][block.pos[0]/Block.width].applyBlock(block)
+            if not self.is_outside(block.pos):
+                self.blocks[block.pos[1]/Block.width][block.pos[0]/Block.width].applyBlock(block)
 
 
     def collides(self, shape, x_change, y_change):
         for block in shape.blocks:
-            if(self.blocks[(y_change+block.pos[1])/Block.width][(x_change+block.pos[0])/Block.width].active()):
+            x_coord = (x_change+block.pos[0])/Block.width
+            y_coord = (y_change+block.pos[1])/Block.width
+            if self.is_outside((x_coord, y_coord)):
                 return True
+
+            if(self.blocks[y_coord][x_coord].active()):
+                return True
+        return False
+
+    def is_outside(self, coord):
+        if coord[0] < 0 or coord[0] >= self.width:
+            return True
+        if coord[1] < 0 or coord[1] >= self.height:
+            return True
         return False
 
 

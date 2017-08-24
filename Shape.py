@@ -1,3 +1,4 @@
+from BlockMap import BlockMap
 from Block import Block
 
 
@@ -91,6 +92,16 @@ class Shape:
     def move(self, (dx, dy)):
         x_offset = dx * Block.width
         y_offset = dy * Block.width
+
+        # Is move legal?
+        bounds = self.get_shape_bounds()
+        if (bounds[0][0]/Block.width)+dx < 0:
+            return
+        if (bounds[0][1]/Block.width)+dx >= BlockMap.width:
+            return
+        if (bounds[1][1]/Block.width)+dy >= BlockMap.height:
+            return
+
         self.pos = (self.pos[0] + x_offset, self.pos[1] + y_offset)
         for block in self.blocks:
             block.pos = (block.pos[0] + x_offset, block.pos[1] + y_offset)
