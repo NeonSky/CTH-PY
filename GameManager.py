@@ -49,7 +49,8 @@ class GameManager:
                 self.currentShape.fall()
             else:
                 self.blockMap.applyShape(self.currentShape)
-                self.show_gameover()
+                self.spawn_shape()
+                #self.show_gameover()
 
         else:
             self.fallTimer += 1

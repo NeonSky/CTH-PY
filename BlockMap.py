@@ -14,22 +14,22 @@ class BlockMap:
         self.default_color = (0, 0, 0)
 
         for i in range(0, 20, 1):
-            self.blocks[i] = (Block((0 * Block.width, i * Block.width), default_color),
-                              Block((1 * Block.width, i * Block.width), default_color),
-                              Block((2 * Block.width, i * Block.width), default_color),
-                              Block((3 * Block.width, i * Block.width), default_color),
-                              Block((4 * Block.width, i * Block.width), default_color),
-                              Block((5 * Block.width, i * Block.width), default_color),
-                              Block((6 * Block.width, i * Block.width), default_color),
-                              Block((7 * Block.width, i * Block.width), default_color),
-                              Block((8 * Block.width, i * Block.width), default_color),
-                              Block((9 * Block.width, i * Block.width), default_color))
+            self.blocks[i] = (Block((0 * Block.width, i * Block.width), self.default_color),
+                              Block((1 * Block.width, i * Block.width), self.default_color),
+                              Block((2 * Block.width, i * Block.width), self.default_color),
+                              Block((3 * Block.width, i * Block.width), self.default_color),
+                              Block((4 * Block.width, i * Block.width), self.default_color),
+                              Block((5 * Block.width, i * Block.width), self.default_color),
+                              Block((6 * Block.width, i * Block.width), self.default_color),
+                              Block((7 * Block.width, i * Block.width), self.default_color),
+                              Block((8 * Block.width, i * Block.width), self.default_color),
+                              Block((9 * Block.width, i * Block.width), self.default_color))
 
         self.blocks[10][0].applyBlock(Block((0, 0), (255, 0, 100)))
 
     def applyShape(self, shape):
         for block in shape.blocks:
-            if not self.is_outside(block.pos):
+            #if not self.is_outside(block.pos):
                 self.blocks[block.pos[1]/Block.width][block.pos[0]/Block.width].applyBlock(block)
         self.check_rows()
 
@@ -48,12 +48,19 @@ class BlockMap:
     def check_rows(self):
         for blockRow in self.blocks:
             isRowFull = True
+            print("#######")
             for block in self.blocks[blockRow]:
-                isRowFull = False
-                break
+                print(block.color)
+                if not block.active():
+                    print("Not Active")
+                    isRowFull = False
+                    break
             if isRowFull:
+                print("Destroy row")
                 for block in self.blocks[blockRow]:
-                    block = Block(block.pos, self.default_color)
+                    block.applyBlock(Block(block.pos, self.default_color))
+
+    #def update_rows(self, destroyed_row):
 
 
     def is_outside(self, coord):
