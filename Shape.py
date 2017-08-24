@@ -115,13 +115,10 @@ class Shape:
             y_index=y_func(block.pos)/Block.width
 
             if not 0 <= x_index < self.block_map.width:
-                print "1 failed"
                 return
             if not 0 <= y_index < self.block_map.height:
-                print "2 failed"
                 return
             if self.block_map.blocks[y_index][x_index].active():
-                print "3 failed"
                 return
         for block in self.blocks:
             block.pos = (x_func(block.pos), y_func(block.pos))
