@@ -25,8 +25,6 @@ class BlockMap:
                               Block((8 * Block.width, i * Block.width), self.default_color),
                               Block((9 * Block.width, i * Block.width), self.default_color))
 
-        self.blocks[10][0].applyBlock(Block((0, 0), (255, 0, 100)))
-
     def applyShape(self, shape):
         for block in shape.blocks:
             #if not self.is_outside(block.pos):
@@ -48,19 +46,21 @@ class BlockMap:
     def check_rows(self):
         for blockRow in self.blocks:
             isRowFull = True
-            print("#######")
             for block in self.blocks[blockRow]:
-                print(block.color)
                 if not block.active():
-                    print("Not Active")
                     isRowFull = False
                     break
             if isRowFull:
-                print("Destroy row")
                 for block in self.blocks[blockRow]:
                     block.applyBlock(Block(block.pos, self.default_color))
+                self.update_rows(blockRow)
 
-    #def update_rows(self, destroyed_row):
+    def update_rows(self, destroyed_row):
+        for row in range(0, destroyed_row-1):
+            r = destroyed_row-1-row
+            for c in range(0, len(self.blocks[r])):
+                self.blocks[r+1][c].applyBlock(self.blocks[r][c])
+                self.blocks[r][c].reset()
 
 
     def is_outside(self, coord):
