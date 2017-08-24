@@ -88,6 +88,13 @@ class Shape:
                 x = 0
                 y += 1
 
+    def move(self, (dx, dy)):
+        x_offset = dx * Block.width
+        y_offset = dy * Block.width
+        self.pos = (self.pos[0] + x_offset, self.pos[1] + y_offset)
+        for block in self.blocks:
+            block.pos = (block.pos[0] + x_offset, block.pos[1] + y_offset)
+
     def horizontal_flip(self):
         bounds = self.get_shape_bounds()
         self.shape_apply((lambda pos: bounds[0][0] + bounds[0][1] - pos[0]), (lambda pos: pos[1]))
@@ -117,9 +124,7 @@ class Shape:
         return ((min_x, max_x), (min_y, max_y))
 
     def fall(self):
-        self.pos = (self.pos[0], self.pos[1] + Block.width)
-        for block in self.blocks:
-            block.pos = (block.pos[0], block.pos[1] + Block.width)
+        self.move((0, 1))
 
     def create_block(self, x_offset, y_offset, color):
         return Block((self.pos[0] + Block.width * x_offset, self.pos[1] + Block.width * y_offset), color)

@@ -1,3 +1,4 @@
+import pygame as pg
 from random import randint
 
 from BlockMap import BlockMap
@@ -30,6 +31,21 @@ class GameManager:
             self.fallTimer = 0
 
             if not self.blockMap.collides(self.currentShape, 0, Block.width):
+                keys = pg.key.get_pressed()
+
+                # move sideways
+                if keys[pg.K_RIGHT]:
+                    self.currentShape.move((1, 0))
+                elif keys[pg.K_LEFT]:
+                    self.currentShape.move((-1, 0))
+
+                # rotate
+                if keys[pg.K_UP]:
+                    self.currentShape.rotate(False)
+                elif keys[pg.K_DOWN]:
+                    self.currentShape.rotate(True)
+
+                # fall
                 self.currentShape.fall()
             else:
                 self.blockMap.applyShape(self.currentShape)
