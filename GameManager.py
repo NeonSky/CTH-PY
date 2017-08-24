@@ -16,7 +16,7 @@ class GameManager:
         self.spawn_shape()
 
     def spawn_shape(self):
-        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-2)])
+        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-2)],self.blockMap)
 
     def update(self):
         if self.isGameOver:
@@ -49,7 +49,8 @@ class GameManager:
                 self.currentShape.fall()
             else:
                 self.blockMap.applyShape(self.currentShape)
-                self.show_gameover()
+                self.spawn_shape()
+                #self.show_gameover()
 
         else:
             self.fallTimer += 1
@@ -68,7 +69,7 @@ class GameManager:
         self.isGameOver = True
         self.currentShape = None
         self.blockMap.empty_map()
-        self.smurf_shape = Shape((0, 0), 'SMURF')
+        self.smurf_shape = Shape((0, 0), 'SMURF', self.blockMap)
 
     def draw(self, screen):
         self.blockMap.draw(screen)
