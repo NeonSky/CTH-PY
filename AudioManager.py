@@ -13,7 +13,7 @@ class AudioManager:
         pg.mixer.music.load(music_filename)
         self.lost_sound = pg.mixer.Sound(filename=game_over_filename)
 
-    def play(self):
+    def play_music(self):
         pg.mixer.music.play(-1)
 
     def play_game_over(self):

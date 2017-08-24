@@ -1,8 +1,11 @@
 import pygame as pg
 
 from GameManager import GameManager
+from AudioManager import AudioManager
 
 gameManager = GameManager()
+audio_manager = AudioManager()
+audio_manager.play_music()
 
 background_color = (0, 0, 0)
 (width, height) = (640, 640)
