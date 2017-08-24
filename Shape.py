@@ -117,9 +117,11 @@ class Shape:
     def rotate(self, direction):  # true=clockwise, false=counter-clockwise
         bounds = self.get_shape_bounds()
         if direction:  # clockwise
-            self.shape_apply((lambda pos: bounds[0][1] - pos[1]), (lambda pos: bounds[1][0] + pos[0]))
+            #x =  x.min_bound - y,  y = y.max_bound + x
+            self.shape_apply((lambda pos: bounds[0][1] - (pos[1]-bounds[1][0])), (lambda pos: bounds[1][0] + (pos[0]-bounds[0][0])))
         else:  # counter-clockwise
-            self.shape_apply((lambda pos: bounds[0][0] + pos[1]), (lambda pos: bounds[1][1] - pos[0]))
+            #x = x.max_bound + y,  y = y.max_bound - x
+            self.shape_apply((lambda pos: bounds[0][0] + (pos[1]-bounds[1][0])), (lambda pos: bounds[1][1] - (pos[0]-bounds[0][0])))
 
     def shape_apply(self, x_func, y_func):
         for block in self.blocks:
@@ -132,7 +134,7 @@ class Shape:
         block_y_values = map(lambda x: x.pos[1], self.blocks)
         max_y = max(block_y_values)
         min_y = min(block_y_values)
-        return ((min_x, max_x), (min_y, max_y))
+        return (min_x, max_x), (min_y, max_y)
 
     def fall(self):
         self.move((0, 1))

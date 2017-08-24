@@ -1,8 +1,11 @@
 import pygame as pg
 
 from GameManager import GameManager
+from AudioManager import AudioManager
 
 gameManager = GameManager()
+audio_manager = AudioManager()
+audio_manager.play_music()
 
 background_color = (0, 0, 0)
 (width, height) = (640, 640)
@@ -20,6 +23,9 @@ while running:
   gameManager.draw(screen)
   pg.display.flip()
 
+  if gameManager.isGameOver:
+    audio_manager.play_game_over()
+      
   #pygame.time.Clock.tick() sets a maximum framerate for the screen to draw
   clock.tick(target_framerate)
   for event in pg.event.get():
