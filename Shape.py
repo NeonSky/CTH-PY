@@ -1,4 +1,3 @@
-from BlockMap import BlockMap
 from Block import Block
 
 
@@ -13,9 +12,10 @@ class Shape:
     color_t = (170, 0, 255)
     color_z = (255, 0, 0)
 
-    def __init__(self, pos, type):
+    def __init__(self, pos, type, block_map):
         self.pos = pos
         self.type = type
+        self.block_map=block_map
         self.createBlocks()
 
     def createBlocks(self):
@@ -90,21 +90,7 @@ class Shape:
                 y += 1
 
     def move(self, (dx, dy)):
-        x_offset = dx * Block.width
-        y_offset = dy * Block.width
-
-        # Is move legal?
-        bounds = self.get_shape_bounds()
-        if (bounds[0][0]/Block.width)+dx < 0:
-            return
-        if (bounds[0][1]/Block.width)+dx >= BlockMap.width:
-            return
-        if (bounds[1][1]/Block.width)+dy >= BlockMap.height:
-            return
-
-        self.pos = (self.pos[0] + x_offset, self.pos[1] + y_offset)
-        for block in self.blocks:
-            block.pos = (block.pos[0] + x_offset, block.pos[1] + y_offset)
+        self.shape_apply((lambda pos: pos[0]+dx*Block.width), (lambda pos: pos[1]+dy*Block.width))
 
     def horizontal_flip(self):
         bounds = self.get_shape_bounds()
@@ -117,13 +103,26 @@ class Shape:
     def rotate(self, direction):  # true=clockwise, false=counter-clockwise
         bounds = self.get_shape_bounds()
         if direction:  # clockwise
-            #x =  x.min_bound - y,  y = y.max_bound + x
+            # x =  x.min_bound - y,  y = y.max_bound + x
             self.shape_apply((lambda pos: bounds[0][1] - (pos[1]-bounds[1][0])), (lambda pos: bounds[1][0] + (pos[0]-bounds[0][0])))
         else:  # counter-clockwise
-            #x = x.max_bound + y,  y = y.max_bound - x
+            # x = x.max_bound + y,  y = y.max_bound - x
             self.shape_apply((lambda pos: bounds[0][0] + (pos[1]-bounds[1][0])), (lambda pos: bounds[1][1] - (pos[0]-bounds[0][0])))
 
     def shape_apply(self, x_func, y_func):
+        for block in self.blocks:
+            x_index=x_func(block.pos)/Block.width
+            y_index=y_func(block.pos)/Block.width
+
+            if not 0 <= x_index < self.block_map.width:
+                print "1 failed"
+                return
+            if not 0 <= y_index < self.block_map.height:
+                print "2 failed"
+                return
+            if self.block_map.blocks[y_index][x_index].active():
+                print "3 failed"
+                return
         for block in self.blocks:
             block.pos = (x_func(block.pos), y_func(block.pos))
 
