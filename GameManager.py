@@ -5,30 +5,57 @@ from Shape import Shape
 from Block import Block
 
 class GameManager:
-    blockMap = BlockMap()
-    smurf_shape = Shape((0, 0), 'SMURF')
+
+    isGameOver = False
 
     def __init__(self):
         print("Game starting...")
-        #self.spawn_shape()
+        self.blockMap = BlockMap()
+        self.smurf_shape = None
+        self.spawn_shape()
 
     def spawn_shape(self):
-        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-1)])
+        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-2)])
+
+    def update(self):
+        if self.isGameOver:
+            self.update_it_smurf()
+        else:
+            self.update_cur_shape()
 
     fallTime = 30
     fallTimer = 0
-    def update(self):
+    def update_cur_shape(self):
         if self.fallTimer >= self.fallTime:
-            self.smurf_shape.flip(0)
-            #self.smurf_shape.fall()
             self.fallTimer = 0
-            #if not self.blockMap.collides(self.currentShape,0,Block.width):
-             #   pass
-                #self.currentShape.fall()
-            return
-        self.fallTimer += 1
+
+            if not self.blockMap.collides(self.currentShape, 0, Block.width):
+                self.currentShape.fall()
+            else:
+                self.blockMap.applyShape(self.currentShape)
+                self.show_gameover()
+
+        else:
+            self.fallTimer += 1
+
+    smurfFlipTime = 30
+    smurfFlipTimer = 0
+    def update_it_smurf(self):
+        if self.smurfFlipTimer >= self.smurfFlipTime:
+            self.smurfFlipTimer = 0
+            self.smurf_shape.flip(0)
+        else:
+            self.smurfFlipTimer += 1
+
+    def show_gameover(self):
+        self.isGameOver = True
+        self.currentShape = None
+        self.blockMap.empty_map()
+        self.smurf_shape = Shape((0, 0), 'SMURF')
 
     def draw(self, screen):
         self.blockMap.draw(screen)
-        self.smurf_shape.draw(screen)
-        #self.currentShape.draw(screen)
+        if self.isGameOver:
+            self.smurf_shape.draw(screen)
+        else:
+            self.currentShape.draw(screen)

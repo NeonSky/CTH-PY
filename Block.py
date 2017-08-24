@@ -2,9 +2,7 @@ import pygame as pg
 
 class Block:
     width = 32
-    pos = (0, 0)
     size = (width, width)
-    color = (0, 0, 0)
     edge_color = (255, 255, 255)
     edge_width = 1
 
