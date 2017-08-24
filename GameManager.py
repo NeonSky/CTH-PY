@@ -2,6 +2,7 @@ import pygame as pg
 from random import randint
 
 from BlockMap import BlockMap
+from HighScore import HighScore
 from Shape import Shape
 from Block import Block
 
@@ -11,12 +12,13 @@ class GameManager:
 
     def __init__(self):
         print("Game starting...")
+        self.high_score = HighScore()
         self.blockMap = BlockMap()
         self.smurf_shape = None
         self.spawn_shape()
 
     def spawn_shape(self):
-        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-2)],self.blockMap)
+        self.currentShape = Shape((0, 0), Shape.types[randint(0, len(Shape.types)-2)], self.blockMap)
 
     def update(self):
         if self.isGameOver:
@@ -41,11 +43,15 @@ class GameManager:
 
                 # rotate
                 if keys[pg.K_UP]:
-                    self.currentShape.rotate(False)
-                elif keys[pg.K_DOWN]:
                     self.currentShape.rotate(True)
+                # elif keys[pg.K_DOWN]:
+                #    self.currentShape.rotate(False)
 
                 # fall
+                if keys[pg.K_DOWN]:
+                    self.fallTime = 10
+                else:
+                    self.fallTime = 30
                 self.currentShape.fall()
             else:
                 self.blockMap.applyShape(self.currentShape)
