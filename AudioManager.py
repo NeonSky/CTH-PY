@@ -11,12 +11,13 @@ class AudioManager:
 
         pg.mixer.init(frequency=sample_rate, channels=channels, size=bitsize, buffer=buffer)
         pg.mixer.music.load(music_filename)
-        self.lost_sound = pg.mixer.Sound(filename=game_over_filename)
+
 
     def play_music(self):
         pg.mixer.music.play(-1)
 
     def play_game_over(self):
         pg.mixer.music.stop()
-        self.lost_sound.play()
+        sound = pg.mixer.Sound(game_over_filename)
+        sound.play()
 
